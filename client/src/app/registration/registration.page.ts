@@ -43,13 +43,17 @@ export class RegistrationPage {
     const loading = await this.messagesService.showLoading('Starting registration ...');
     await loading.present();
 
-    let body = new HttpParams();
+
+    let body = new RegistrationStartRequest
     if (username) {
-      body = body.set('username', username);
+      body.status = 'NEW';
+      body.sessionId = username;
     } else if (registrationAddToken) {
-      body = body.set('registrationAddToken', registrationAddToken);
+      body.status = 'ADD';
+      body.registrationAddToken = registrationAddToken;
     } else if (recovery) {
-      body = body.set('recoveryToken', recovery);
+      body.status = 'RECOVERY';
+      body.recoveryToken = recovery;
     }
 
     this.httpClient.post<RegistrationStartResponse>('registration/start', body)
@@ -86,17 +90,18 @@ export class RegistrationPage {
     }
 
     const credentialResponse = {
-      registrationId: response.registrationId,
+      sessionId: response.sessionId,
       credential
     };
 
     const loading = await this.messagesService.showLoading('Finishing registration ...');
     await loading.present();
 
-    this.httpClient.post('registration/finish', credentialResponse, {responseType: 'text'})
-      .subscribe(recoveryToken => {
-        if (recoveryToken) {
-          this.recoveryToken = recoveryToken;
+    this.httpClient.post<RegistrationFinishResponse>('registration/finish', credentialResponse)
+      .subscribe(response => {
+        if (response.status === 'OK') {
+          // @ts-ignore
+          this.recoveryToken = response.recoveryToken;
         } else {
           this.messagesService.showErrorToast('Registration failed');
         }
@@ -106,11 +111,20 @@ export class RegistrationPage {
       }, () => loading.dismiss());
   }
 }
-
+class RegistrationStartRequest {
+  status: 'NEW' | 'ADD' | 'RECOVERY' | undefined;
+  sessionId?: string| null;
+  registrationAddToken?: string| null;
+  recoveryToken?: string| null;
+}
 interface RegistrationStartResponse {
   status: 'OK' | 'USERNAME_TAKEN' | 'TOKEN_INVALID';
-  registrationId?: string;
+  sessionId?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   publicKeyCredentialCreationOptions: any;
 }
 
+interface RegistrationFinishResponse {
+  status: 'OK' | 'REGISTER_FAILED';
+  recoveryToken?: string | null;
+}
