@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   }
 
   requestRegisterAdditionalAuthenticator(): void {
-    this.httpClient.get('registration-add', {
+    this.httpClient.get('registration/add', {
       responseType: 'text',
       withCredentials: true
     }).subscribe(text => this.registrationAddToken = text);

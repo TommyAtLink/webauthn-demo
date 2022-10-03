@@ -23,7 +23,7 @@
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/registration-add": {
+  "/registration/add": {
     "target": "http://localhost:8080",
     "secure": false
   },
