@@ -45,7 +45,7 @@ export class LoginPage {
     }
 
     const assertionResponse = {
-      assertionId: response.assertionId,
+      authChallengeId: response.authChallengeId,
       credential
     };
 
@@ -68,7 +68,7 @@ export class LoginPage {
 }
 
 interface AssertionStartResponse {
-  assertionId: string;
+  authChallengeId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   publicKeyCredentialRequestOptions: any;
 }

@@ -31,7 +31,7 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label position="stacked">Username</ion-label>
+            <ion-label position="stacked">SessionId</ion-label>
             <ion-input #username="ngModel" [required]="true" [spellcheck]="false" autocapitalize="off"
                        autocomplete="username" name="username"
                        ngModel type="text"></ion-input>
@@ -43,12 +43,12 @@
         <ion-col>
           <ion-text *ngIf="registrationForm.submitted && username.invalid" color="danger">
             <p *ngIf="username.errors?.required" class="ion-padding-start">
-              Username is required
+              SessionId is required
             </p>
           </ion-text>
           <ion-text *ngIf="submitError" color="danger">
             <p *ngIf="submitError === 'usernameTaken'" class="ion-padding-start">
-              Username already registered
+              Target Customer already registered
             </p>
           </ion-text>
         </ion-col>
@@ -72,6 +72,12 @@
       <ion-row>
         <ion-col>
           <ion-item>
+            <ion-label position="stacked">SessionId</ion-label>
+            <ion-input #username="ngModel" [required]="true" [spellcheck]="false" autocapitalize="off"
+                       autocomplete="username" name="username"
+                       ngModel type="text"></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label position="stacked">Add Authenticator Code</ion-label>
             <ion-input #registrationAddCode="ngModel" [required]="true" [spellcheck]="false" autocapitalize="off"
                        name="registrationAddCode" ngModel type="text"></ion-input>
@@ -81,6 +87,11 @@
 
       <ion-row>
         <ion-col>
+          <ion-text *ngIf="registrationForm.submitted && username.invalid" color="danger">
+            <p *ngIf="username.errors?.required" class="ion-padding-start">
+              SessionId is required
+            </p>
+          </ion-text>
           <ion-text *ngIf="registrationForm.submitted && registrationAddCode.invalid" color="danger">
             <p *ngIf="registrationAddCode.errors?.required" class="ion-padding-start">
               Add Authenticator Code is required
@@ -112,6 +123,12 @@
       <ion-row>
         <ion-col>
           <ion-item>
+            <ion-label position="stacked">SessionId</ion-label>
+            <ion-input #username="ngModel" [required]="true" [spellcheck]="false" autocapitalize="off"
+                       autocomplete="username" name="username"
+                       ngModel type="text"></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label position="stacked">Recovery Code</ion-label>
             <ion-input #recoveryCode="ngModel" [required]="true" [spellcheck]="false" autocapitalize="off" name="recoveryCode"
                        ngModel type="text"></ion-input>
@@ -121,6 +138,11 @@
 
       <ion-row>
         <ion-col>
+          <ion-text *ngIf="registrationForm.submitted && username.invalid" color="danger">
+            <p *ngIf="username.errors?.required" class="ion-padding-start">
+              SessionId is required
+            </p>
+          </ion-text>
           <ion-text *ngIf="registrationForm.submitted && recoveryCode.invalid" color="danger">
             <p *ngIf="recoveryCode.errors?.required" class="ion-padding-start">
               Recovery Code is required

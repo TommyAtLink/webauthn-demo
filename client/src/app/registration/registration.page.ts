@@ -50,9 +50,11 @@ export class RegistrationPage {
       body.sessionId = username;
     } else if (registrationAddToken) {
       body.status = 'ADD';
+      body.sessionId = username;
       body.registrationAddToken = registrationAddToken;
     } else if (recovery) {
       body.status = 'RECOVERY';
+      body.sessionId = username;
       body.recoveryToken = recovery;
     }
 
@@ -90,7 +92,7 @@ export class RegistrationPage {
     }
 
     const credentialResponse = {
-      sessionId: response.sessionId,
+      authChallengeId: response.authChallengeId,
       credential
     };
 
@@ -113,13 +115,13 @@ export class RegistrationPage {
 }
 class RegistrationStartRequest {
   status: 'NEW' | 'ADD' | 'RECOVERY' | undefined;
-  sessionId?: string| null;
+  sessionId?: string | null;
   registrationAddToken?: string| null;
   recoveryToken?: string| null;
 }
 interface RegistrationStartResponse {
   status: 'OK' | 'USERNAME_TAKEN' | 'TOKEN_INVALID';
-  sessionId?: string;
+  authChallengeId?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   publicKeyCredentialCreationOptions: any;
 }
