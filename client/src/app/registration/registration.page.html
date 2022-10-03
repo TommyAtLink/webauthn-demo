@@ -63,7 +63,7 @@
     </ion-grid>
   </form>
 
-  <form #registrationForm="ngForm" (ngSubmit)="registrationForm.valid && registerAdd(registrationAddCode.value)"
+  <form #registrationForm="ngForm" (ngSubmit)="registrationForm.valid && registerAdd(username.value, registrationAddCode.value)"
         *ngIf="view === 'add'"
         [ngFormOptions]="{updateOn: 'submit'}"
         class="ion-margin-top" novalidate>
@@ -114,7 +114,7 @@
     </ion-grid>
   </form>
 
-  <form #registrationForm="ngForm" (ngSubmit)="registrationForm.valid && recover(recoveryCode.value)"
+  <form #registrationForm="ngForm" (ngSubmit)="registrationForm.valid && recover(username.value, recoveryCode.value)"
         *ngIf="view === 'recover'"
         [ngFormOptions]="{updateOn: 'submit'}"
         class="ion-margin-top" novalidate>

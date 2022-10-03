@@ -24,12 +24,12 @@ export class RegistrationPage {
     this.register(username, null, null);
   }
 
-  registerAdd(registerAddToken: string): void {
-    this.register(null, registerAddToken, null);
+  registerAdd(username: string, registerAddToken: string): void {
+    this.register(username, registerAddToken, null);
   }
 
-  recover(recovery: string): void {
-    this.register(null, null, recovery);
+  recover(username: string, recovery: string): void {
+    this.register(username, null, recovery);
   }
 
   selectSegment($event: Event): void {
@@ -45,17 +45,17 @@ export class RegistrationPage {
 
 
     let body = new RegistrationStartRequest
-    if (username) {
-      body.status = 'NEW';
-      body.sessionId = username;
-    } else if (registrationAddToken) {
-      body.status = 'ADD';
-      body.sessionId = username;
-      body.registrationAddToken = registrationAddToken;
-    } else if (recovery) {
-      body.status = 'RECOVERY';
+    if (recovery) {
+      body.mode = 'RECOVERY';
       body.sessionId = username;
       body.recoveryToken = recovery;
+    } else if (registrationAddToken) {
+      body.mode = 'ADD';
+      body.sessionId = username;
+      body.registrationAddToken = registrationAddToken;
+    } else {
+      body.mode = 'NEW';
+      body.sessionId = username;
     }
 
     this.httpClient.post<RegistrationStartResponse>('registration/start', body)
@@ -63,6 +63,7 @@ export class RegistrationPage {
         await loading.dismiss();
         if (response.status === 'OK') {
           await this.createCredentials(response);
+
         } else if (response.status === 'USERNAME_TAKEN') {
           this.submitError = 'usernameTaken';
         } else if (response.status === 'TOKEN_INVALID') {
@@ -102,8 +103,12 @@ export class RegistrationPage {
     this.httpClient.post<RegistrationFinishResponse>('registration/finish', credentialResponse)
       .subscribe(response => {
         if (response.status === 'OK') {
-          // @ts-ignore
-          this.recoveryToken = response.recoveryToken;
+          if (response.recoveryToken != null) {
+            this.recoveryToken = response.recoveryToken;
+          } else {
+            this.recoveryToken = "OK";
+          }
+
         } else {
           this.messagesService.showErrorToast('Registration failed');
         }
@@ -114,7 +119,7 @@ export class RegistrationPage {
   }
 }
 class RegistrationStartRequest {
-  status: 'NEW' | 'ADD' | 'RECOVERY' | undefined;
+  mode: 'NEW' | 'ADD' | 'RECOVERY' | undefined;
   sessionId?: string | null;
   registrationAddToken?: string| null;
   recoveryToken?: string| null;
