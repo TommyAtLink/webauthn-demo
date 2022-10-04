@@ -1,33 +1,33 @@
 {
-  "/authenticate": {
+  "/v1/authenticate": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/assertion/start": {
+  "/v1/assertion/start": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/assertion/finish": {
+  "/v1/assertion/finish": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/logout": {
+  "/v1/logout": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/registration/start": {
+  "/v1/registration/start": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/registration/finish": {
+  "/v1/registration/finish": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/registration/add": {
+  "/v1/registration/add": {
     "target": "http://localhost:8080",
     "secure": false
   },
-  "/secret": {
+  "/v1/secret": {
     "target": "http://localhost:8080",
     "secure": false
   }
