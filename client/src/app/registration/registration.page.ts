@@ -13,7 +13,7 @@ export class RegistrationPage {
   view = 'new';
 
   submitError: string | null = null;
-  recoveryToken: string | null = null;
+  recoveryToken: string | null | undefined = null;
 
   constructor(private readonly navCtrl: NavController,
               private readonly messagesService: MessagesService,
@@ -61,18 +61,19 @@ export class RegistrationPage {
     this.httpClient.post<RegistrationStartResponse>('registration/start', body)
       .subscribe(async (response) => {
         await loading.dismiss();
-        if (response.status === 'OK') {
+        console.log(response.authChallengeId);
+        // if (response !== null) {
           await this.createCredentials(response);
-
-        } else if (response.status === 'USERNAME_TAKEN') {
-          this.submitError = 'usernameTaken';
-        } else if (response.status === 'TOKEN_INVALID') {
-          if (registrationAddToken) {
-            this.submitError = 'addTokenInvalid';
-          } else {
-            this.submitError = 'recoveryTokenInvalid';
-          }
-        }
+        //
+        // } else if (response.status === 'USERNAME_TAKEN') {
+        //   this.submitError = 'usernameTaken';
+        // } else if (response.status === 'TOKEN_INVALID') {
+        //   if (registrationAddToken) {
+        //     this.submitError = 'addTokenInvalid';
+        //   } else {
+        //     this.submitError = 'recoveryTokenInvalid';
+        //   }
+        // }
       }, () => {
         loading.dismiss();
         this.messagesService.showErrorToast('Registration failed');
@@ -102,8 +103,9 @@ export class RegistrationPage {
 
     this.httpClient.post<RegistrationFinishResponse>('registration/finish', credentialResponse)
       .subscribe(response => {
-        if (response.status === 'OK') {
-          if (response.recoveryToken != null) {
+        console.log(response);
+        if (response !== null) {
+          if (response.recoveryToken !== null) {
             this.recoveryToken = response.recoveryToken;
           } else {
             this.recoveryToken = "OK";
@@ -124,14 +126,13 @@ class RegistrationStartRequest {
   registrationAddToken?: string| null;
   recoveryToken?: string| null;
 }
+
 interface RegistrationStartResponse {
-  status: 'OK' | 'USERNAME_TAKEN' | 'TOKEN_INVALID';
   authChallengeId?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   publicKeyCredentialCreationOptions: any;
 }
 
 interface RegistrationFinishResponse {
-  status: 'OK' | 'REGISTER_FAILED';
   recoveryToken?: string | null;
 }
