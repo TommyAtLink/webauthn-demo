@@ -1,48 +1,47 @@
 {
   "/authenticate": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/authentication/start": {
-    "target": "http://localhost:8080/v1",
-    "secure": false,
+    "target": "https://idm.link-dev.money/v1",
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/authentication/finish": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/logout": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/registration/start": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/registration/finish": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/registration/add": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"
   },
   "/secret": {
-    "target": "http://localhost:8080/v1",
+    "target": "https://idm.link-dev.money/v1",
     "secure": false,
     "changeOrigin" : true,
     "logLevel": "debug"

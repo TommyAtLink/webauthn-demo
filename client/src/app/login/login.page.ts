@@ -24,7 +24,10 @@ export class LoginPage {
     const loading = await this.messagesService.showLoading('Initiate login ...');
     await loading.present();
 
-    this.httpClient.post<AssertionStartResponse>('authentication/start', username)
+    let body = new AssertionStartRequest;
+    body.sessionId = username
+
+    this.httpClient.post<AssertionStartResponse>('authentication/start', body)
       .subscribe(response => this.handleAssertionStart(response), () => {
 
         loading.dismiss();
@@ -72,4 +75,7 @@ interface AssertionStartResponse {
   authChallengeId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   publicKeyCredentialRequestOptions: any;
+}
+class AssertionStartRequest {
+  sessionId: string | undefined;
 }

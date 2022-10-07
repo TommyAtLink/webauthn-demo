@@ -58,7 +58,7 @@ export class RegistrationPage {
       body.sessionId = username;
     }
 
-    this.httpClient.post<RegistrationStartResponse>('v1/registration/start', body)
+    this.httpClient.post<RegistrationStartResponse>('registration/start', body)
       .subscribe(async (response) => {
         await loading.dismiss();
         console.log(response.authChallengeId);
@@ -101,7 +101,7 @@ export class RegistrationPage {
     const loading = await this.messagesService.showLoading('Finishing registration ...');
     await loading.present();
 
-    this.httpClient.post<RegistrationFinishResponse>('v1/registration/finish', credentialResponse)
+    this.httpClient.post<RegistrationFinishResponse>('registration/finish', credentialResponse)
       .subscribe(response => {
         console.log(response);
         if (response !== null) {
